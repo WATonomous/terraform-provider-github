@@ -35,16 +35,17 @@ func resourceGithubRulesetObject(d *schema.ResourceData, org string) *github.Rul
 }
 
 func expandBypassActors(input []interface{}) []*github.BypassActor {
-	if len(input) == 0 {
-		return nil
-	}
 	bypassActors := make([]*github.BypassActor, 0)
 
 	for _, v := range input {
 		inputMap := v.(map[string]interface{})
 		actor := &github.BypassActor{}
 		if v, ok := inputMap["actor_id"].(int); ok {
-			actor.ActorID = github.Int64(int64(v))
+			if v == 0 {
+				actor.ActorID = nil
+			} else {
+				actor.ActorID = github.Int64(int64(v))
+			}
 		}
 
 		if v, ok := inputMap["actor_type"].(string); ok {
