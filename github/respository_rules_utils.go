@@ -35,9 +35,6 @@ func resourceGithubRulesetObject(d *schema.ResourceData, org string) *github.Rul
 }
 
 func expandBypassActors(input []interface{}) []*github.BypassActor {
-	if len(input) == 0 {
-		return nil
-	}
 	bypassActors := make([]*github.BypassActor, 0)
 
 	for _, v := range input {
